@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="driver")
+//@Table(name="driver")
 public class Driver extends Employee{
     private String qualification;
 

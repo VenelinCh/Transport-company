@@ -10,11 +10,28 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("org.hibernate.orm:hibernate-core:6.4.4.Final")
+//    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+//    testImplementation("org.junit.jupiter:junit-jupiter")
+//    implementation("org.hibernate.orm:hibernate-core:6.5.2.Final")
+//    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+//    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
+//    implementation("com.mysql:mysql-connector-j:8.0.33")
+//    implementation ("org.apache.logging.log4j:log4j-core:2.12.1")
+
+
+
+
+
+    implementation ("org.hibernate:hibernate-core:6.5.2.Final")
+    //implementation ("mysql:mysql-connector-java:8.0.33")
     implementation("com.mysql:mysql-connector-j:8.0.33")
     implementation ("org.apache.logging.log4j:log4j-core:2.12.1")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
+    implementation("org.glassfish.expressly:expressly:5.0.0")
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation ("com.h2database:h2:2.1.214")
 }
 
 tasks.test {

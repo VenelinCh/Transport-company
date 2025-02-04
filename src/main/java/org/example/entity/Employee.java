@@ -1,5 +1,6 @@
 package org.example.entity;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 
 import java.util.Set;
 
@@ -7,8 +8,8 @@ import java.util.Set;
 @Entity
 @Table(name="employee")
 public class Employee extends Person{
-   //
     private double salary;
+    @Valid
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Company> companies;
 

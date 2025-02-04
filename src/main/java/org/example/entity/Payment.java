@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.example.dao.TransportationDao;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -82,13 +81,9 @@ public class Payment extends BaseEntity{
     @Override
     public String  toString() {
         return "Payment{" +
-                "id=" + this.getId() + ///
-//                "client=" + client +
-//                ", transportation=" + transportation +
-//                ", toCompany=" + toCompany +
+                "id=" + this.getId() +
                 ", cost=" + cost +
                 ", paid=" + paid +
-
                 '}';
     }
 }

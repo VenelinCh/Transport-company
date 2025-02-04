@@ -1,7 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.query.sqm.produce.function.StandardFunctionReturnTypeResolvers;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -9,10 +9,18 @@ import java.util.Set;
 @Entity
 @Table(name="company")
 public class Company extends BaseEntity{
+    @NotBlank(message = "Company name cannot be blank!")
+    @Size(max = 20, message = "Company name has to be with up to 20 characters!")
+    @Pattern(regexp = "^([A-Z]).*", message = "Company name has to start with capital letter!")
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
+    @Column(name = "country", nullable = false)
     private String country;
     private String city;
+    @NotNull
+    @Column(name = "income")
     BigDecimal income;
     @ManyToMany(mappedBy = "companies")
     private Set<Owner> ownews;
@@ -23,10 +31,11 @@ public class Company extends BaseEntity{
     public Company() {
     }
 
-    public Company(String name, String country, String city) {
+    public Company(String name, String country, String city, BigDecimal income) {
         this.name = name;
         this.country = country;
         this.city = city;
+        this.income = income;
     }
 
     public String getName() {

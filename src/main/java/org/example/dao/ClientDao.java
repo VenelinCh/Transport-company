@@ -7,11 +7,9 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Client;
-import org.example.entity.Company;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class ClientDao {

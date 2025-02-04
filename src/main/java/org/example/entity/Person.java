@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 @MappedSuperclass
 public class Person {
     @Id
-    //@Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;

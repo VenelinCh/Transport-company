@@ -27,11 +27,11 @@ public class PaymentDao {
         }
         return payment;
     }
-    public static List<Payment > getPayments(){
+    public static List<Payment > getAllPayments(){
         List<Payment> payments;
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            payments =session.createQuery("Select c from Payment c", Payment.class).getResultList();
+            payments =session.createQuery("Select p from Payment p", Payment.class).getResultList();
             transaction.commit();
         }
         return  payments;

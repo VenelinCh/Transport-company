@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "transportation")
 public class Transportation extends BaseEntity{
-    private String startingPoint;//make it with class Address
+    private String startingPoint;
     private TypeTransport typeTransport;
     private String destination;
     private BigDecimal price;
@@ -21,12 +21,9 @@ public class Transportation extends BaseEntity{
     private Set<Driver> drivers;
     @ManyToOne(fetch = FetchType.LAZY)
     private Company companyClient;
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Client> clients;
-    private boolean paid;//remove it
+
 
     public Transportation() {
-        this.paid = false;
     }
 
     public Transportation(String startingPoint, String destination, LocalDate startDate, LocalDate finishDate, Vehicle vehicle, Set<Driver> drivers, Company companyClient, BigDecimal price) {
@@ -39,7 +36,6 @@ public class Transportation extends BaseEntity{
         this.drivers = drivers;
         this.companyClient = companyClient;
         this.price = price;
-        //this.paid = false;
     }
     public Transportation(TypeTransport typeTransport,String startingPoint, String destination, LocalDate startDate, LocalDate finishDate, Vehicle vehicle, Set<Driver> drivers, Company companyClient) {
         this.startingPoint = startingPoint;
@@ -50,7 +46,6 @@ public class Transportation extends BaseEntity{
         this.vehicle = vehicle;
         this.drivers = drivers;
         this.companyClient = companyClient;
-        //this.paid = false;
     }
     public Transportation(TypeTransport typeTransport,String startingPoint, String destination, LocalDate startDate, LocalDate finishDate, Vehicle vehicle, Set<Driver> drivers, Company companyClient, Set<Client> clients, boolean paid) {
         this.startingPoint = startingPoint;
@@ -61,8 +56,6 @@ public class Transportation extends BaseEntity{
         this.vehicle = vehicle;
         this.drivers = drivers;
         this.companyClient = companyClient;
-        this.clients = clients;
-        this.paid = paid;
     }
 
     public String getStartingPoint() {
@@ -129,22 +122,6 @@ public class Transportation extends BaseEntity{
         this.companyClient = companyClient;
     }
 
-    public Set<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(Set<Client> clients) {
-        this.clients = clients;
-    }
-
-    public boolean isPayed() {
-        return paid;
-    }
-
-    public void setPayed(boolean paid) {
-        this.paid = paid;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -161,10 +138,6 @@ public class Transportation extends BaseEntity{
                 ", destination='" + destination + '\'' +
                 ", startDate=" + startDate +
                 ", finishDate=" + finishDate +
-                //", vehicle=" + vehicle +
-                //", drivers=" + drivers +
-                //", companyClient=" + companyClient +
-                ", paid=" + paid +
                 '}';
     }
 }

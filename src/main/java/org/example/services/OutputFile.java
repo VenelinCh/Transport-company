@@ -1,6 +1,4 @@
-package org.example;
-
-import org.example.entity.Payment;
+package org.example.services;
 
 import java.io.IOException;
 import java.nio.file.Files;

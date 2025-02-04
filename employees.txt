@@ -1,1 +1,4 @@
-Driver{Employee{Person{id=1, name='Ivan', lastName='Todorov'}, salary=3000.0}qualification='C1'}
+Driver{Employee{Person{id=1, name='Ivo', lastName='Georgiev'}, salary=2000.0}qualification='null'}
+Driver{Employee{Person{id=2, name='Petar', lastName='Ivanov'}, salary=1900.0}qualification='null'}
+Driver{Employee{Person{id=3, name='Petar', lastName='Popov'}, salary=1900.0}qualification='null'}
+Driver{Employee{Person{id=4, name='Ivan', lastName='Georgiev'}, salary=1900.0}qualification='null'}

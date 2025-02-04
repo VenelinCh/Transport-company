@@ -4,13 +4,17 @@ import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import org.example.Dto.CreateCompanyDTO;
+import org.example.Dto.PaymentDTO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Company;
 import org.example.entity.Employee;
-import org.example.entity.Transportation;
 import org.example.entity.Vehicle;
+import org.example.exceptions.CompanyException;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.math.BigDecimal;
@@ -19,11 +23,29 @@ import java.util.List;
 import java.util.Set;
 
 public class CompanyDao {
-    public static void createCompany(Company company){
-        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
-             Transaction transaction = session.beginTransaction();
-             session.save(company);
-             transaction.commit();
+
+    public static void createCompany(@Valid Company company) {
+        Transaction transaction = null;
+        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.save(company);
+            transaction.commit();
+        }catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new CompanyException("Error saving company", e);
+        }catch (ConstraintViolationException e){
+            throw new CompanyException("Error saving company" + e.getMessage(), e);
+        }
+    }
+    public static void saveCompanyDto(CreateCompanyDTO createCompanyDto) {
+        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Company company = new Company();
+            company.setName(createCompanyDto.getName());
+            session.save(company);
+            transaction.commit();
         }
     }
     public static Company getCompanyById(long id){
@@ -45,7 +67,7 @@ public class CompanyDao {
         return  companies;
 }
 
-    public static Company updateCompany(Company company){
+    public static Company updateCompany(@Valid Company company){
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
             session.saveOrUpdate(company);
@@ -86,22 +108,6 @@ public static Set<Employee> getCompanyEmployee(long id){
         }
         return company;
     }
-//    public static List<Vehicle> getComponyVehicles(long id){
-//        double earning=0;
-//        Vehicle vehicle;
-//        List<Vehicle> vehicles;
-//        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
-//            Transaction transaction = session.beginTransaction();
-//            vehicles = session.createQuery("select v from Vehicle v" +
-//                                    " join fetch v.company" +
-//                                    " where v.id = :id",
-//                            Vehicle.class)
-//                    .setParameter("id",id)
-//                    .getResultList();
-//            transaction.commit();
-//        }
-//        return vehicles;
-//    }
 
     public static Set<Vehicle> getCompanyVehicles(long id){
         Company company;
@@ -160,7 +166,21 @@ public static Set<Employee> getCompanyEmployee(long id){
             transaction.commit();
             return companies;
         }
-
+    }
+    public static List<PaymentDTO> getPayments(long id){
+        List<PaymentDTO> payments;
+        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+            payments = session.createQuery(
+                    "select new org.example.Dto.PaymentDTO(p.id, p.paid, p.cost) from Payment p " +
+                            "join p.toCompany c " +
+                            "where c.id = :id ",
+                    PaymentDTO.class)
+                    .setParameter("id", id)
+                    .getResultList();
+            transaction.commit();
+        }
+        return payments;
     }
 
 }
